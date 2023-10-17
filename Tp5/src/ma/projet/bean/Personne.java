@@ -5,7 +5,7 @@
  */
 package ma.projet.bean;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -114,9 +114,6 @@ public class Personne {
         return "Personne{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", ville=" + ville + ", dateNaiss=" + dateNaiss + ", email=" + email + ", Salaire=" + Salaire + '}';
     }
 
-    public Object getDate() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     
 }

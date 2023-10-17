@@ -19,7 +19,7 @@ import ma.projet.dao.IDao;
 
 /**
  *
- * @author H P
+ * @author PC
  */
 public class ProfilImpl implements IDao<Profil>{
     Profil ps;
