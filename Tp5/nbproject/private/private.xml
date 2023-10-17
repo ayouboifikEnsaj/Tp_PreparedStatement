@@ -3,13 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/PC/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/forms/GestionEmloyes.java</file>
-            <file>file:/C:/Users/PC/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/forms/Main.java</file>
-            <file>file:/C:/Users/PC/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/impl/PersonneImpl.java</file>
-            <file>file:/C:/Users/PC/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/bean/Profil.java</file>
-            <file>file:/C:/Users/PC/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/bean/Personne.java</file>
-            <file>file:/C:/Users/PC/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/forms/GestionProfil.java</file>
-            <file>file:/C:/Users/PC/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/impl/ProfilImpl.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/connexion/Connexion.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/forms/GestionProfil.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/forms/Main.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/test/Test.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/impl/PersonneImpl.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/bean/Personne.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/forms/RechercheProfile.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/impl/ProfilImpl.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/forms/GestionEmloyes.java</file>
+            <file>file:/C:/Users/H%20P/Desktop/TpJdbcPreparedStatement/Tp5/src/ma/projet/bean/Profil.java</file>
         </group>
     </open-files>
 </project-private>

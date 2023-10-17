@@ -5,19 +5,30 @@
  */
 package ma.projet.forms;
 
-import ma.projet.bean.Profil;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import ma.beans.Personne;
+import ma.beans.Profil;
+import ma.projet.impl.ProfilImpl;
+
 
 /**
  *
- * @author H P
+ * @author Ismail
  */
 public class GestionProfil extends javax.swing.JInternalFrame {
-
+    private DefaultTableModel model = null;
+    ProfilImpl pi = new ProfilImpl();
+    private int id;
     /**
      * Creates new form GestionProfil
      */
     public GestionProfil() {
         initComponents();
+//       
+       model=(DefaultTableModel) jTable2.getModel();
+       load();
         
     }
 
@@ -31,38 +42,42 @@ public class GestionProfil extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCode1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtLibelle1 = new javax.swing.JTextField();
         txtAjouter = new javax.swing.JButton();
         txtModifier = new javax.swing.JButton();
         txtSupprimer = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
 
         setClosable(true);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id", "code", "libelle"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable2);
 
         jLabel1.setText("Code :");
 
         jLabel2.setText("Libelle :");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtLibelle1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtLibelle1ActionPerformed(evt);
             }
         });
 
@@ -74,13 +89,16 @@ public class GestionProfil extends javax.swing.JInternalFrame {
         });
 
         txtModifier.setText("Modifier");
+        txtModifier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtModifierActionPerformed(evt);
+            }
+        });
 
         txtSupprimer.setText("Supprimer");
-
-        jButton4.setText("Enregistrer");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        txtSupprimer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                txtSupprimerActionPerformed(evt);
             }
         });
 
@@ -97,73 +115,120 @@ public class GestionProfil extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+                            .addComponent(txtCode1)
+                            .addComponent(txtLibelle1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(txtAjouter)
                         .addGap(52, 52, 52)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtModifier)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                                .addComponent(txtSupprimer)
-                                .addGap(38, 38, 38)))))
+                        .addComponent(txtModifier)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addComponent(txtSupprimer)
+                        .addGap(38, 38, 38)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(34, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                            .addComponent(txtCode1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtLibelle1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(87, 87, 87)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtAjouter)
                             .addComponent(txtModifier)
-                            .addComponent(txtSupprimer))
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton4)))
-                .addContainerGap())
+                            .addComponent(txtSupprimer))))
+                .addGap(103, 103, 103))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    public void load(){
+          model.setRowCount(0);
+          for(Profil p : pi.findAll()){
+                model.addRow(new Object[]{
+                p.getId(),
+                p.getCode(),
+                p.getLibelle(),
+            });
+          }
+    
+    }
     private void txtAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAjouterActionPerformed
         // TODO add your handling code here:
+        try{
+            pi.create(new Profil(txtCode1.getText().toString(), txtLibelle1.getText().toString()));
+            load();
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            load();
+            
+        }
+        
+        
     }//GEN-LAST:event_txtAjouterActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void txtLibelle1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLibelle1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        
+    }//GEN-LAST:event_txtLibelle1ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModifierActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+        try{
+            pi.update(new Profil(id, txtCode1.getText().toString(), txtLibelle1.getText().toString()));
+            JOptionPane.showMessageDialog(this,"user bien modifie");
+            load();
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            load();
+        }
+        
+        
+    }//GEN-LAST:event_txtModifierActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+        id=Integer.parseInt(model.getValueAt(jTable2.getSelectedRow(), 0).toString());
+        txtCode1.setText(model.getValueAt(jTable2.getSelectedRow(), 1).toString());
+        txtLibelle1.setText(model.getValueAt(jTable2.getSelectedRow(), 2).toString());
+        
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void txtSupprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSupprimerActionPerformed
+        // TODO add your handling code here:
+        try{
+            pi.delete(new Profil(id,txtCode1.getText().toString(), txtLibelle1.getText().toString()));
+            load();
+        }
+        catch (Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+            load();
+            
+        }
+    }//GEN-LAST:event_txtSupprimerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable jTable2;
     private javax.swing.JButton txtAjouter;
+    private javax.swing.JTextField txtCode1;
+    private javax.swing.JTextField txtLibelle1;
     private javax.swing.JButton txtModifier;
     private javax.swing.JButton txtSupprimer;
     // End of variables declaration//GEN-END:variables

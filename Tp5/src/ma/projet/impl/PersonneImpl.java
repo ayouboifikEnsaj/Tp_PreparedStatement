@@ -15,17 +15,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import ma.projet.bean.Personne;
-import ma.projet.bean.Profil;
-import ma.projet.connexion.Connexion;
-import ma.projet.dao.IDao;
+import ma.beans.Personne;
+import ma.beans.Profil;
+import ma.connexion.Connexion;
+import ma.dao.IDao;
+import ma.projet.impl.ProfilImpl;
 
 /**
  *
- * @author H P
+ * @author Ismail
  */
 public class PersonneImpl implements IDao<Personne>{
-    ProfilImpl pi = null;
+    ProfilImpl pi=new ProfilImpl();
+    Profil p;
     @Override
     public boolean create(Personne o) {
         try {
@@ -35,7 +37,7 @@ public class PersonneImpl implements IDao<Personne>{
             ps.setString(1, o.getNom());
             ps.setString(2, o.getPrenom());
             ps.setString(3, o.getVille());
-            ps.setDate(4, o.getDateNaiss());
+            ps.setDate(4, new Date(o.getDateNaiss().getTime()));
             ps.setString(5, o.getEmail());
             ps.setDouble(6, o.getSalaire());
             ps.setInt(7, o.getProfil().getId());
@@ -52,16 +54,17 @@ public class PersonneImpl implements IDao<Personne>{
 
     @Override
     public boolean update(Personne o) {
-        String req = " UPDATE personne SET id=null, nom = ? ,prenom=?,ville=?, datenaiss= ?, email = ?, salaire = ? ,profil=?,WHERE id = ?";
+        String req = " UPDATE personne SET nom = ? ,prenom=? , ville=? , datenaiss= ? ,email = ?, salaire = ? ,profil=? WHERE id = ?";
         try {
             PreparedStatement pr = Connexion.getConnection().prepareStatement(req);
             pr.setString(1, o.getNom());
             pr.setString(2, o.getPrenom());
             pr.setString(3, o.getVille());
-            pr.setDate(4,o.getDateNaiss());
+            pr.setDate(4,new Date(o.getDateNaiss().getTime()));
             pr.setString(5, o.getEmail());
-            pr.setInt(6, o.getProfil().getId());
-            pr.setInt(7, o.getId());
+            pr.setInt(7, o.getProfil().getId());
+            pr.setDouble(6, o.getSalaire());
+            pr.setInt(8, o.getId());
 
             if (pr.executeUpdate() == 1) {
                 return true;
@@ -74,7 +77,7 @@ public class PersonneImpl implements IDao<Personne>{
 
     @Override
     public boolean delete(Personne o) {
-        String req = "delete from perssone where id = " + o.getId();
+        String req = "delete from personne where id = " + o.getId();
         try {
             Statement st = Connexion.getConnection().createStatement();
             st.executeUpdate(req);
@@ -89,12 +92,13 @@ public class PersonneImpl implements IDao<Personne>{
     public Personne findById(int id) {
         Personne personne=null;
         ResultSet rs = null;
-        String req = "select * from personne where id = " + id;
+        String req = "select * from personne where id ="+id;
         try {
             Statement st = Connexion.getConnection().createStatement();
             rs = st.executeQuery(req);
             if (rs.next()) {
-                personne = new Personne(rs.getString("nom"), rs.getString("prenom"),rs.getString("ville"), rs.getDate("datenaiss"), rs.getString("email"), rs.getDouble("Salaire"), pi.findById(rs.getInt("profil")));
+                personne = new Personne(id,rs.getString("nom"), rs.getString("prenom"),rs.getString("ville"),rs.getDate("datenaiss"), rs.getString("email"), rs.getDouble("Salaire"),pi.findById(rs.getInt("profil")));
+                
             }
         } catch (SQLException ex) {
             System.out.println("Erreur findById presonne:" + ex.getMessage());
@@ -111,7 +115,8 @@ public class PersonneImpl implements IDao<Personne>{
             Statement st = Connexion.getConnection().createStatement();
             rs = st.executeQuery(req);
             while (rs.next()) {
-                personnes.add(new Personne(rs.getString("nom"), rs.getString("prenom"),rs.getString("ville"), rs.getDate("datenaiss"), rs.getString("email"), rs.getDouble("Salaire"), pi.findById(rs.getInt("profil"))));
+              personnes.add(new Personne(rs.getInt("id"),rs.getString("nom"), rs.getString("prenom"),rs.getString("ville"),rs.getDate("datenaiss"), rs.getString("email"), rs.getDouble("Salaire"),pi.findById(rs.getInt("profil"))));
+                
             }
         } catch (SQLException ex) {
             System.out.println("Erreur findAll personne:" + ex.getMessage());

@@ -12,14 +12,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import ma.projet.bean.Personne;
-import ma.projet.bean.Profil;
-import ma.projet.connexion.Connexion;
-import ma.projet.dao.IDao;
+import ma.beans.Personne;
+import ma.beans.Profil;
+import ma.connexion.Connexion;
+import ma.dao.IDao;
 
 /**
  *
- * @author PC
+ * @author Ismail
  */
 public class ProfilImpl implements IDao<Profil>{
     Profil ps;
@@ -42,16 +42,17 @@ public class ProfilImpl implements IDao<Profil>{
 
     @Override
     public boolean update(Profil o) {
-        String req = " UPDATE profil SET code = ? ,libelle=?";
+        String req = " UPDATE profil SET code = ? ,libelle=? WHERE id = ?";
         try {
             PreparedStatement pr = Connexion.getConnection().prepareStatement(req);
             pr.setString(1, o.getCode());
             pr.setString(2, o.getLibelle());
+            pr.setInt(3,o.getId());
             if (pr.executeUpdate() == 1) {
                 return true;
             }
         } catch (SQLException e) {
-            System.out.println("erreur de modification de profil" + e.getMessage());
+            System.out.println("erreur de modification de profil " + e.getMessage());
         }
         return false;
     }
